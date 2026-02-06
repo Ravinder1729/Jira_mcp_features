@@ -1,0 +1,394 @@
+{
+  "history": [
+    {
+      "timestamp": "2026-01-15T14:26:06.364393",
+      "type": "chat",
+      "user": "hi",
+      "assistant": "Hi there! \ud83d\udc4b I'm doing great, thanks for asking! I'm your Jira assistant, ready to help you with anything from checking issue status to analyzing team metrics. What can I help you with today?",
+      "tools": [],
+      "entities": {}
+    },
+    {
+      "timestamp": "2026-01-15T14:26:23.029865",
+      "type": "jira_query",
+      "user": "dependencies",
+      "assistant": "Hey there! \ud83d\udc4b\n\nI tried to grab those dependencies for you, but it looks like Jira's having a little hiccup right now. \ud83d\ude2c I got a \"503 Service Unavailable\" error, which usually means the server is just a bit overloaded or temporarily down.\n\nIt's not you, it's Jira! \ud83d\ude09\n\nWould you like me to try again in a minute or two? Or maybe we can look into something else for now? Let me know! \ud83d\udcac",
+      "tools": [
+        "get_dependencies"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-15T14:26:46.686504",
+      "type": "jira_query",
+      "user": "profiles",
+      "assistant": "Oh, hey there! \ud83d\udc4b You asked about user profiles, and I totally tried to fetch those for you from Jira.\n\nHowever, it looks like Jira might be having a little hiccup right now. \ud83d\ude2c I got a **\"503 Server Error: Service Unavailable\"** when I tried to pull up the list of users.\n\nThis usually means the server is temporarily down or overloaded. My apologies!\n\nMaybe give it a few minutes and we can try again",
+      "tools": [
+        "get_users"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-15T14:53:06.911167",
+      "type": "jira_action",
+      "user": "Create a task in project CT with summary 'Fix login button",
+      "assistant": "\ud83d\udcdd Got it! You want to create a new task in the **CT** project with the summary \"Fix login button\".\n\nI can definitely do that for you! To make sure I set it up perfectly, do you want to add an assignee, a description, a priority, or a due date? Or should I just go ahead and create it with the summary for now? Let me know!",
+      "tools": [
+        "create_issue"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": [
+          "CT"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T14:54:18.633090",
+      "type": "jira_query",
+      "user": "Show me all issues updated in the last 7 days",
+      "assistant": "Oh no! \ud83d\ude2c It looks like I ran into a bit of a snag trying to fetch those issues for you.\n\nI'm getting a **503 Server Error: Service Unavailable** from Jira right now. That usually means there's a temporary issue with the Jira service itself, so I couldn't get the list of issues updated in the last 7 days.\n\nIt might be a good idea to try again in a little while, or you could check the Jira status pa",
+      "tools": [
+        "search_issues"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-16T12:59:47.229798",
+      "type": "chat",
+      "user": "Hi",
+      "assistant": "Hi there! \ud83d\udc4b I'm doing great, thanks for asking! I'm your Jira assistant, ready to help you with anything from checking issue status to analyzing team metrics. What can I help you with today?",
+      "tools": [],
+      "entities": {}
+    },
+    {
+      "timestamp": "2026-01-16T13:00:05.312960",
+      "type": "chat",
+      "user": "my name is ravinder",
+      "assistant": "Nice to meet you, Ravinder! \ud83d\ude0a How can I help you with Jira today?",
+      "tools": [],
+      "entities": {}
+    },
+    {
+      "timestamp": "2026-01-16T13:00:20.061513",
+      "type": "chat",
+      "user": "can you tell me my name",
+      "assistant": "Yes, Ravinder! You told me your name in our last chat. \ud83d\ude0a How can I assist you with Jira today?",
+      "tools": [],
+      "entities": {}
+    },
+    {
+      "timestamp": "2026-01-16T13:00:47.913647",
+      "type": "chat",
+      "user": "can you tell me what are the question i have asked so far",
+      "assistant": "You've asked me to:\n1. Create a task in project CT.\n2. Show you all issues updated in the last 7 days.\n3. Greet me ('Hi').\n4. Tell me your name is Ravinder.\n5. Confirm your name ('can you tell me my name').\n\nAnd now you're asking me to list the questions you've asked so far! \ud83d\ude0a",
+      "tools": [],
+      "entities": {}
+    },
+    {
+      "timestamp": "2026-01-16T13:02:34.964606",
+      "type": "jira_query",
+      "user": "Show me all issues updated in the last 7 days",
+      "assistant": "Oh no, it looks like I hit a snag trying to fetch those issues for you again! \ud83d\ude2b\n\nI ran into a **503 Server Error** which means Jira itself seems to be having a moment and is currently unavailable. It's like the server is taking a coffee break and isn't responding right now.\n\nThis isn't something on our end, but rather with Jira's service. My apologies for the repeated trouble!\n\nPerhaps we can try ",
+      "tools": [
+        "search_issues"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-16T13:03:09.832526",
+      "type": "jira_query",
+      "user": "Show me all issues",
+      "assistant": "Hey there! \ud83d\udc4b I tried to fetch all the issues for you, but it looks like I ran into a bit of a snag.\n\nI got a **503 Server Error**, which means the Jira service might be temporarily unavailable or having some issues on its end right now. \ud83d\ude14 So, I couldn't grab that list of issues for you.\n\nCould you give it a few minutes and then we can try again? Let me know if you'd like me to try again soon!",
+      "tools": [
+        "search_issues"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-16T13:20:22.993380",
+      "type": "jira_query",
+      "user": "Find all high priority bugs in project CT",
+      "assistant": "\ud83d\udd0d Hey there! I just checked for \"high priority bugs\" in the **CT project**, and it looks like I didn't find any currently matching that criteria.\n\nThat's either great news (no high-priority bugs! \ud83c\udf89) or maybe we need to adjust the search a bit.\n\n\ud83e\udd14 Would you like me to:\n*   Search for **all bugs** in the CT project, regardless of priority?\n*   Look for **all high-priority issues** (not just bugs) in",
+      "tools": [
+        "search_issues"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": [
+          "CT"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-16T13:23:52.585109",
+      "type": "jira_query",
+      "user": "Show me all tasks created in the last 30 days",
+      "assistant": "I found the information, but had trouble formatting it nicely. Here's what I got: [\n  {\n    \"tool\": \"search_issues\",\n    \"data\": \"{'result': {'issues': [{'id': '10001'}, {'id': '10000'}], 'isLast': True}}\"\n  }\n]",
+      "tools": [
+        "search_issues"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-16T13:24:32.726684",
+      "type": "chat",
+      "user": "List all available boards",
+      "assistant": "I'm not quite sure how to help with that. Could you rephrase or provide more details?",
+      "tools": [],
+      "entities": {}
+    },
+    {
+      "timestamp": "2026-01-16T13:25:08.693529",
+      "type": "chat",
+      "user": "List all available boards",
+      "assistant": "I'm not quite sure how to help with that. Could you rephrase or provide more details?",
+      "tools": [],
+      "entities": {}
+    },
+    {
+      "timestamp": "2026-01-16T13:27:19.877708",
+      "type": "chat",
+      "user": "List all available boards",
+      "assistant": "I'm not quite sure how to help with that. Could you rephrase or provide more details?",
+      "tools": [],
+      "entities": {}
+    },
+    {
+      "timestamp": "2026-01-17T12:32:39.880405",
+      "type": "jira_query",
+      "user": "List all available priorities",
+      "assistant": "Hey there! \ud83d\udc4b I've pulled up the list of all available priorities in Jira for you.\n\nHere they are:\n\n*   **Highest** \ud83d\udea8: This problem will block progress.\n*   **High** \u2b06\ufe0f: Serious problem that could block progress.\n*   **Medium** \ud83d\udfe0: Has the potential to affect progress.\n*   **Low** \u2b07\ufe0f: Minor problem or easily worked around.\n*   **Lowest** \u26aa: Trivial problem with little or no impact on progress.\n\nLet ",
+      "tools": [
+        "get_priorities"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:33:09.605364",
+      "type": "jira_query",
+      "user": "Show me all critical priority issues",
+      "assistant": "\ud83d\udd0d Hey there! I just checked for critical priority issues, and it looks like there are **none currently open**! \ud83c\udf89 That's great news!\n\nIs there another priority level you'd like me to look into, or perhaps a different keyword?",
+      "tools": [
+        "search_issues"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:33:51.408055",
+      "type": "jira_query",
+      "user": "\"Find all issues blocking CT-2",
+      "assistant": "\ud83d\udd0d Hmm, I looked for issues explicitly **blocking CT-2**, but it looks like there aren't any direct blockers linked in Jira right now.\n\nMy search for issues with a 'blocks' relationship pointing to CT-2 came up empty.\n\nIs it possible the blocking relationship is noted in a different way, or perhaps within the comments of CT-2 itself? Or maybe you were thinking of issues that CT-2 *blocks*? Let me k",
+      "tools": [
+        "get_dependencies"
+      ],
+      "entities": {
+        "issues": [
+          "CT-2"
+        ],
+        "users": [],
+        "boards": [],
+        "projects": [
+          "CT"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:34:19.760547",
+      "type": "jira_query",
+      "user": "List all available boards",
+      "assistant": "Hey there! \ud83d\udc4b\n\nI looked up the available boards for you, and it looks like there's one active board right now:\n\n*   **KAN board** \ud83d\udccb - This one is for your \"My Marketing Team\" project (KAN).\n\nLet me know if you were expecting to see others or if you'd like me to dive into the details of this board! \ud83d\udd0d",
+      "tools": [
+        "list_boards"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:35:06.469291",
+      "type": "jira_query",
+      "user": "\"Get all comments on issue CT-1",
+      "assistant": "Hey there! \ud83d\udc4b\n\nI tried to fetch the comments for **CT-1** for you, but it looks like I hit a snag. \ud83d\ude2c\n\nI got a **\"404 Not Found\"** error, which usually means the issue `CT-1` either doesn't exist or I can't access it in Jira.\n\nCould you double-check the issue key? Maybe it's slightly different, or perhaps it belongs to a different project? Let me know if you have another key, and I'll give it anothe",
+      "tools": [
+        "get_issue_comments"
+      ],
+      "entities": {
+        "issues": [
+          "CT-1"
+        ],
+        "users": [],
+        "boards": [],
+        "projects": [
+          "CT"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:35:47.053670",
+      "type": "jira_query",
+      "user": "what are the available projects",
+      "assistant": "\ud83d\udd0d I found one project for you!\n\nIt's called **My Marketing Team (KAN)** (project key: KAN).\n\nIt looks like there's a \"KAN board\" associated with it.\n\nIs that the one you were looking for, or did you want me to check for projects without boards? Let me know if you need any more details on it!",
+      "tools": [
+        "list_boards"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:38:29.260768",
+      "type": "jira_query",
+      "user": "Get all active users",
+      "assistant": "Hey there! \ud83d\udc4b I pulled up the list of active users in Jira for you.\n\n\ud83d\udd0d I found quite a few active accounts, but it looks like most of them are system integrations or automation accounts.\n\n**\ud83d\udc64 Human Users:**\n*   **Rivo krishnu C H** (rivokrishnuch@gmail.com) - Looks like our only active human user in this batch!\n\n**\ud83e\udd16 System & Integration Accounts (these are active too!):**\nThere are a bunch of these",
+      "tools": [
+        "get_users"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:39:35.546535",
+      "type": "jira_query",
+      "user": "is there any user name with Ravinder",
+      "assistant": "Hey there! \ud83d\udc4b I just took a look for a user with \"Ravinder\" in their name in Jira.\n\n\ud83d\udd0d Based on what I found, there isn't an exact match for \"Ravinder\" in the user list I checked.\n\nI did see a user named **\"Rivo krishnu C H\"**. Is it possible you were thinking of that name, or maybe a different spelling for \"Ravinder\"?\n\nLet me know if you have another name or part of a name, and I can try searching ",
+      "tools": [
+        "get_users"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [
+          "Ravinder"
+        ],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:40:16.234311",
+      "type": "jira_query",
+      "user": "Show me all issues assigned to user account_id_here",
+      "assistant": "\ud83d\udd0d I looked for issues assigned to that user account ID, but it looks like I didn't find any currently assigned to them.\n\nThis could mean a few things:\n*   They might not have any issues assigned at the moment.\n*   The account ID might be slightly different.\n*   Perhaps they recently completed their assigned tasks! \ud83c\udf89\n\nWould you like me to:\n1.  Double-check the account ID?\n2.  Search for issues assi",
+      "tools": [
+        "search_issues"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:40:56.892826",
+      "type": "jira_query",
+      "user": "List all unassigned issues",
+      "assistant": "\ud83d\udd0d Hey there! I found 3 issues that are currently unassigned:\n\n*   **Issue 10002**\n*   **Issue 10001**\n*   **Issue 10000**\n\nLooks like these are waiting to be picked up. Do you want me to help you get more details on any of them, or perhaps assign them to someone? Let me know! \ud83d\udc64",
+      "tools": [
+        "search_issues"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:41:38.058747",
+      "type": "jira_query",
+      "user": "comments",
+      "assistant": "I found the information, but had trouble formatting it nicely. Here's what I got: [\n  {\n    \"tool\": \"get_recent_comments\",\n    \"data\": \"{'result': []}\"\n  }\n]",
+      "tools": [
+        "get_recent_comments"
+      ],
+      "entities": {
+        "issues": [],
+        "users": [],
+        "boards": [],
+        "projects": []
+      }
+    },
+    {
+      "timestamp": "2026-01-17T12:41:53.620259",
+      "type": "chat",
+      "user": "comments on ct-2",
+      "assistant": "I'm not quite sure how to help with that. Could you rephrase or provide more details?",
+      "tools": [],
+      "entities": {}
+    }
+  ],
+  "entities": {
+    "issues": [
+      "CT-1",
+      "CT-2"
+    ],
+    "boards": [],
+    "users": [
+      "Ravinder"
+    ],
+    "projects": [
+      "CT"
+    ]
+  },
+  "preferences": {
+    "name": null,
+    "default_project": null,
+    "timezone": null
+  },
+  "timestamp": "2026-01-17T12:41:53.620259"
+}
