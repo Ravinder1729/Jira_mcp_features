@@ -202,19 +202,21 @@ class JiraGitHubTracker:
         self,
         repo_owner: str,
         repo_name: str,
-        author_email: str,
+        author_email: Optional[str],
         since: datetime,
-        branch: str = "main"
+        branch: str = "main",
+        github_username: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
-        Get GitHub commits by author email since a date
+        Get GitHub commits by author email OR username since a date
         
         Args:
             repo_owner: GitHub repository owner
             repo_name: Repository name
-            author_email: Author's email address
+            author_email: Author's email address (can be None if username provided)
             since: Start date for commits
             branch: Branch name (default: main)
+            github_username: GitHub login/username to match (optional)
             
         Returns:
             List of commits by the author
@@ -234,12 +236,31 @@ class JiraGitHubTracker:
         if isinstance(result, dict) and result.get("commits"):
             commits = result["commits"]
             
-            # Filter by author email
-            author_commits = [
-                commit for commit in commits
-                if commit.get("commit", {}).get("author", {}).get("email", "").lower() 
-                   == author_email.lower()
-            ]
+            # Filter logic:
+            # 1. If github_username provided, check commit['author']['login']
+            # 2. If author_email provided, check commit['commit']['author']['email']
+            # 3. If both, either match works
+            
+            author_commits = []
+            for commit in commits:
+                is_match = False
+                
+                # Check Email
+                if author_email:
+                    c_email = commit.get("commit", {}).get("author", {}).get("email", "").lower()
+                    if c_email == author_email.lower():
+                        is_match = True
+                
+                # Check Username (Login)
+                if not is_match and github_username:
+                    # commit['author'] is the GitHub user object (can be None)
+                    c_author = commit.get("author") or {}
+                    c_login = c_author.get("login", "").lower()
+                    if c_login == github_username.lower():
+                        is_match = True
+                
+                if is_match:
+                    author_commits.append(commit)
             
             return author_commits
         
@@ -326,12 +347,13 @@ class JiraGitHubTracker:
         story_key: str,
         repo_owner: str,
         repo_name: str,
-        branch: str = "main"
+        branch: str = "main",
+        github_username: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Track commits related to a specific user story with validation
         """
-        print(f"DEBUG: Tracking {story_key} in {repo_owner}/{repo_name}...")
+        print(f"DEBUG: Tracking {story_key} in {repo_owner}/{repo_name} (User: {github_username or 'Auto-dectect'})...")
         
         # Get story from Jira
         story = await self.get_issue_by_key(story_key)
@@ -367,11 +389,9 @@ class JiraGitHubTracker:
         else:
             description_text = str(description)
         
-        # Parse created date
-        if created:
-            created_date = datetime.fromisoformat(created.replace("Z", "+00:00"))
-        else:
-            created_date = datetime.now() - timedelta(days=30)
+        # Parse created date - BUT use a wider window for commits (60 days) to catch pre-work
+        # ignoring strictly the story creation date which might be late
+        created_date = datetime.now() - timedelta(days=60)
         
         analysis = {
             "story_key": story_key,
@@ -403,21 +423,57 @@ class JiraGitHubTracker:
         analysis["comments"] = comm_res.get("comments", [])
         analysis["comments_error"] = comm_res.get("error")
 
-        if not assignee_email:
-            print(f"DEBUG: {story_key} assignee has no email, skipping commit tracking.")
-            analysis["note"] = "Assignee has no email - cannot track commits"
+        # CHECK: Do we have ANY way to identify the user?
+        if not assignee_email and not github_username:
+            print(f"DEBUG: {story_key} assignee has no email AND no github username provided. Skipping.")
+            analysis["note"] = "Assignee has no email and no manual mapping found - cannot track commits"
             analysis["work_status"] = "No commits (email missing)"
             return analysis
         
-        # Get commits by assignee since story creation
-        print(f"DEBUG: Fetching commits by {assignee_email} since {created_date}...")
+        # Try to find a branch that matches the story key
+        print(f"DEBUG: Looking for branch matching {story_key}...")
+        branch_to_use = branch  # Default to 'main' or provided arg
+        is_feature_branch = False
+        
+        try:
+            branch_res = await self.github.call("list_branches", {
+                "owner": repo_owner,
+                "repo": repo_name
+            })
+            
+            if isinstance(branch_res, dict) and branch_res.get("branches"):
+                branches = branch_res["branches"]
+                # Look for exact match or branch containing key
+                matching_branches = [b for b in branches if story_key.lower() in b.lower()]
+                
+                if matching_branches:
+                    # Pick the best match (shortest one is usually the most relevant)
+                    branch_to_use = min(matching_branches, key=len)
+                    is_feature_branch = True
+                    print(f"DEBUG: Found matching branch: {branch_to_use}")
+                else:
+                    print("DEBUG: No matching branch found. Using default.")
+        except Exception as e:
+            print(f"DEBUG: Failed to list branches: {e}")
+
+        # Get commits by assignee (Email OR Username) since story creation
+        print(f"DEBUG: Fetching commits by {assignee_email or github_username} since {created_date} on branch {branch_to_use}...")
         commits = await self.get_commits_by_author(
             repo_owner,
             repo_name,
             assignee_email,
             created_date,
-            branch
+            branch_to_use,
+            github_username=github_username
         )
+        
+        # Add debugging info to analysis
+        analysis["debug_info"] = {
+            "branch_used": branch_to_use,
+            "tracked_user": github_username,
+            "tracked_email": assignee_email,
+            "repo": f"{repo_owner}/{repo_name}"
+        }
         
         # Filter commits that reference this story
         project_key = story_key.split("-")[0]
@@ -427,8 +483,11 @@ class JiraGitHubTracker:
             commit_msg = commit.get("commit", {}).get("message", "")
             referenced_keys = self.extract_jira_keys_from_message(commit_msg, project_key)
             
-            # Check if this story is referenced
-            if story_key.upper() in [k.upper() for k in referenced_keys]:
+            # Check if this story is referenced match STRICTLY
+            # OR if we are on a FEATURE BRANCH, assume all commits on it are relevant!
+            is_referenced = story_key.upper() in [k.upper() for k in referenced_keys]
+            
+            if is_referenced or is_feature_branch:
                 commit_info = {
                     "sha": commit.get("sha", "")[:7],
                     "full_sha": commit.get("sha", ""),
