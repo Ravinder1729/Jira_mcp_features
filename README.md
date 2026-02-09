@@ -17,3 +17,5 @@ Set the following environment variables before running the application:
 JIRA_API_TOKEN=your_jira_api_token
 GITHUB_API_TOKEN=your_github_api_token
 GEMINI_API_KEY=your_gemini_api_key
+
+scdfgdfghjghjhjhjkkj,jmgbfxgbbgfbs

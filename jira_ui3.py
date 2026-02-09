@@ -147,13 +147,19 @@ class GitHubClient:
             commits = await self.get_commits(
                 owner=args.get("owner"),
                 repo=args.get("repo"),
-                since=args.get("since")
+                since=args.get("since"),
+                branch=args.get("sha") or args.get("branch") # Accept sha or branch
             )
             return {"commits": commits}
         elif tool == "get_authenticated_user":
             return await self.get_authenticated_user()
         elif tool == "list_repositories":
             return await self.list_repositories()
+        elif tool == "list_branches":
+            return await self.list_branches(
+                owner=args.get("owner"),
+                repo=args.get("repo")
+            )
         return {"error": f"Unknown tool: {tool}"}
 
     async def get_authenticated_user(self):
@@ -175,11 +181,26 @@ class GitHubClient:
             response = requests.get(url, headers=self.headers, params=params, timeout=10)
             response.raise_for_status()
             repos = response.json()
-            return {"repositories": [{"name": r["name"], "full_name": r["full_name"]} for r in repos]}
+            return {"repositories": [{"name": r["name"], "full_name": r["full_name"], "updated_at": r["updated_at"]} for r in repos]}
         except Exception as e:
             return {"error": str(e)}
 
-    async def get_commits(self, owner: str, repo: str, since: str = None):
+    async def list_branches(self, owner: str, repo: str):
+        """List branches for a repository"""
+        if not owner or not repo:
+            return {"branches": []}
+            
+        url = f"https://api.github.com/repos/{owner}/{repo}/branches"
+        params = {"per_page": 100}
+        try:
+            response = requests.get(url, headers=self.headers, params=params, timeout=10)
+            response.raise_for_status()
+            branches = response.json()
+            return {"branches": [b["name"] for b in branches]}
+        except Exception as e:
+            return {"error": str(e)}
+
+    async def get_commits(self, owner: str, repo: str, since: str = None, branch: str = None):
         """Fetch commits from a GitHub repository"""
         if not owner or not repo:
             return []
@@ -188,6 +209,8 @@ class GitHubClient:
         params = {"per_page": 100}  # Limit to 100 most recent commits
         if since:
             params["since"] = since
+        if branch:
+            params["sha"] = branch # GitHub API uses 'sha' for branch/tag/commit SHA
         
         try:
             response = requests.get(url, headers=self.headers, params=params, timeout=10)
